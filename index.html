@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://a.picoapps.xyz/country-escondido -->
+<html lang="en"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Japanese Tutorial App</title>
+<link href="./files/tailwind.min.css" rel="stylesheet">
+<script src="./files/jquery.min.js.download"></script>
+<script src="./files/responsivevoice.min.js.download"></script>
+<script data-domain="picoapps.xyz" defer="" src="./files/script.outbound-links.js.download"></script></head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center" bgcolor=#000000>
+<div class="bg-white p-8 rounded-lg shadow-md w-full md:max-w-md">
+<h1 class="text-xl font-bold mb-4">Random Japanese Word</h1>
+<div class="flex flex-col items-center">
+<div class="mb-4">
+<p class="text-4xl font-bold" id="japaneseWord">こんにちは</p>
+<p class="text-lg" id="transliteration">konnichiwa</p>
+</div>
+<p class="mb-4 text-lg font-semibold" id="translation">Hello</p>
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" id="listenPronunciation">
+				Listen to Pronunciation
+			</button>
+<button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" id="getRandomWord">
+				Get another word
+			</button>
+</div>
+</div>
+<script>
+		const wordsList = [
+			{ word: "こんにちは", transliteration: "konnichiwa", translation: "Hello" },
+			{ word: "ありがとう", transliteration: "arigatou", translation: "Thank you" },
+			{ word: "さようなら", transliteration: "sayounara", translation: "Goodbye" },
+			{ word: "おはよう", transliteration: "ohayou", translation: "Good morning" },
+			{ word: "こんばんは", transliteration: "konbanwa", translation: "Good evening" },
+			{ word: "すみません", transliteration: "sumimasen", translation: "Excuse me / I'm sorry" },
+			{ word: "ありがとう ございます", transliteration: "arigatou gozaimasu", translation: "Thank you very much" },
+			{ word: "ごめん ください", transliteration: "gomen kudasai", translation: "Please excuse me" },
+			{ word: "どういたしまして", transliteration: "douitashimashite", translation: "You're welcome" },
+			{ word: "はじめまして", transliteration: "hajimemashite", translation: "Nice to meet you" },
+			{ word: "お元気 です か", transliteration: "ogenki desu ka", translation: "How are you?" },
+			{ word: "元気 です", transliteration: "genki desu", translation: "I'm fine" },
+			{ word: "すごい", transliteration: "sugoi", translation: "Awesome" },
+			{ word: "大丈夫", transliteration: "daijoubu", translation: "It's okay / I'm okay" },
+			{ word: "おやすみなさい", transliteration: "oyasuminasai", translation: "Good night" },
+			{ word: "お願い します", transliteration: "onegai shimasu", translation: "Please" },
+			{ word: "いいえ", transliteration: "iie", translation: "No" },
+			{ word: "はい", transliteration: "hai", translation: "Yes" },
+			{ word: "わかりました", transliteration: "wakarimashita", translation: "Understood" },
+			{ word: "ちょっとまってください", transliteration: "chotto matte kudasai", translation: "Please wait a moment" },
+			{ word: "ともだち", transliteration: "tomodachi", translation: "Friend" },
+			{ word: "日本", transliteration: "nihon", translation: "Japan" },
+			{ word: "猫", transliteration: "neko", translation: "Cat" },
+			{ word: "犬", transliteration: "inu", translation: "Dog" },
+			{ word: "家族", transliteration: "kazoku", translation: "Family" },
+			{ word: "学校", transliteration: "gakkou", translation: "School" },
+			{ word: "魚", transliteration: "sakana", translation: "Fish" },
+			{ word: "肉", transliteration: "niku", translation: "Meat" },
+			{ word: "果物", transliteration: "kudamono", translation: "Fruit" },
+			{ word: "野菜", transliteration: "yasai", translation: "Vegetables" },
+			{ word: "水", transliteration: "mizu", translation: "Water" },
+			{ word: "お茶", transliteration: "ocha", translation: "Tea" },
+			{ word: "コーヒー", transliteration: "koohii", translation: "Coffee" },
+			{ word: "食べる", transliteration: "taberu", translation: "To eat" },
+			{ word: "飲む", transliteration: "nomu", translation: "To drink" },
+			{ word: "見る", transliteration: "miru", translation: "To see" },
+			{ word: "行く", transliteration: "iku", translation: "To go" },
+			{ word: "来る", transliteration: "kuru", translation: "To come" },
+			{ word: "話す", transliteration: "hanasu", translation: "To speak" },
+			{ word: "聞く", transliteration: "kiku", translation: "To listen" },
+			{ word: "書く", transliteration: "kaku", translation: "To write" },
+			{ word: "読む", transliteration: "yomu", translation: "To read" },
+			{ word: "歌う", transliteration: "utau", translation: "To sing" },
+			{ word: "遊ぶ", transliteration: "asobu", translation: "To play" },
+			{ word: "寝る", transliteration: "neru", translation: "To sleep" },
+			{ word: "起きる", transliteration: "okiru", translation: "To wake up" },
+			{ word: "買う", transliteration: "kau", translation: "To buy" },
+			{ word: "売る", transliteration: "uru", translation: "To sell" },
+			{ word: "探す", transliteration: "sagasu", translation: "To search" },
+			{ word: "学ぶ", transliteration: "manabu", translation: "To learn" },
+			{ word: "話", transliteration: "hanashi", translation: "Conversation / Story" },
+			{ word: "本", transliteration: "hon", translation: "Book" },
+			{ word: "電話", transliteration: "denwa", translation: "Telephone" },
+			{ word: "手紙", transliteration: "tegami", translation: "Letter" },
+			{ word: "映画", transliteration: "eiga", translation: "Movie" },
+			{ word: "音楽", transliteration: "ongaku", translation: "Music" },
+			{ word: "料理", transliteration: "ryouri", translation: "Cooking / Cuisine" },
+			{ word: "旅行", transliteration: "ryokou", translation: "Travel" },
+			{ word: "写真", transliteration: "shashin", translation: "Photo" },
+			{ word: "運動", transliteration: "undou", translation: "Exercise" },
+			{ word: "仕事", transliteration: "shigoto", translation: "Work" },
+			{ word: "休み", transliteration: "yasumi", translation: "Holiday / Vacation" },
+			{ word: "友達", transliteration: "tomodachi", translation: "Friend" },
+			{ word: "家族", transliteration: "kazoku", translation: "Family" },
+			{ word: "先生", transliteration: "sensei", translation: "Teacher" },
+			{ word: "学校", transliteration: "gakkou", translation: "School" },
+			{ word: "犬", transliteration: "inu", translation: "Dog" },
+			{ word: "猫", transliteration: "neko", translation: "Cat" },
+			{ word: "鳥", transliteration: "tori", translation: "Bird" },
+			{ word: "魚", transliteration: "sakana", translation: "Fish" },
+			{ word: "花", transliteration: "hana", translation: "Flower" },
+			{ word: "木", transliteration: "ki", translation: "Tree" },
+			{ word: "山", transliteration: "yama", translation: "Mountain" },
+			{ word: "川", transliteration: "kawa", translation: "River" },
+			{ word: "海", transliteration: "umi", translation: "Sea" },
+			{ word: "空", transliteration: "sora", translation: "Sky" },
+			{ word: "太陽", transliteration: "taiyou", translation: "Sun" },
+			{ word: "月", transliteration: "tsuki", translation: "Moon" },
+			{ word: "星", transliteration: "hoshi", translation: "Star" },
+			{ word: "雨", transliteration: "ame", translation: "Rain" },
+			{ word: "雪", transliteration: "yuki", translation: "Snow" },
+			{ word: "風", transliteration: "kaze", translation: "Wind" },
+			{ word: "熱い", transliteration: "atsui", translation: "Hot" },
+			{ word: "寒い", transliteration: "samui", translation: "Cold" },
+			{ word: "美味しい", transliteration: "oishii", translation: "Delicious" },
+			{ word: "面白い", transliteration: "omoshiroi", translation: "Interesting / Fun" },
+			{ word: "難しい", transliteration: "muzukashii", translation: "Difficult" },
+			{ word: "簡単", transliteration: "kantan", translation: "Easy / Simple" },
+			{ word: "嬉しい", transliteration: "ureshii", translation: "Happy" },
+			{ word: "悲しい", transliteration: "kanashii", translation: "Sad" },
+			{ word: "怖い", transliteration: "kowai", translation: "Scary" },
+			{ word: "面倒くさい", transliteration: "menzukusai", translation: "Annoying / Troublesome" },
+			{ word: "大丈夫", transliteration: "daijoubu", translation: "Okay / All right" },
+			{ word: "ありがとう", transliteration: "arigatou", translation: "Thank you" },
+			{ word: "ごめんなさい", transliteration: "gomennasai", translation: "I'm sorry" },
+			// Add more words as needed
+		];
+
+		const japaneseWord = document.getElementById("japaneseWord");
+		const transliteration = document.getElementById("transliteration");
+		const translation = document.getElementById("translation");
+		const listenPronunciation = document.getElementById("listenPronunciation");
+		const getRandomWord = document.getElementById("getRandomWord");
+
+		function displayRandomWord() {
+			const randomWord = wordsList[Math.floor(Math.random() * wordsList.length)];
+			japaneseWord.textContent = randomWord.word;
+			transliteration.textContent = randomWord.transliteration;
+			translation.textContent = randomWord.translation;
+		}
+
+		listenPronunciation.addEventListener("click", () => {
+			const speech = new SpeechSynthesisUtterance(japaneseWord.textContent);
+		speech.lang = "ja-JP";
+		speechSynthesis.speak(speech);
+		});
+
+		getRandomWord.addEventListener("click", displayRandomWord);
+
+		displayRandomWord();
+	</script>
+
+</body></html>
